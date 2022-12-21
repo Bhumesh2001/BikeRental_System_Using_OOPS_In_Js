@@ -4,13 +4,12 @@ const input = require("readline-sync");
 class Admin_Accounts{
     
     intro(){
-        let opt = input.questionInt(`Welcome to Accounts:: \n1.Sign up\n2.Log in\n3.Exit\n`);
+        let opt = input.questionInt(`------Welcome to Accounts: \n------1.Sign up\n-------2.Log in\n------3.Exit\n`);
         if(opt == 3){
             console.log(`------ Exited----\n`);
             return 0
         }
         else if(opt == 1){
-            admin_accounts.signup()
             return 1
         }
         else if(opt == 2){
@@ -18,27 +17,27 @@ class Admin_Accounts{
         }
         else{
             console.log(`------ Invalid request`);
-            accounts.intro()
+            admin_accounts.intro()
         }
 }
 
     signup(admin_email,admin_info){
-        if(!fs.existsSync("./hackathon/store_admin_data.json")){
+        if(!fs.existsSync("./store_admin_data.json")){
             let admin_data = {}
             let arr = []
             admin_data[admin_email] = admin_info
             arr.push(admin_data)
-            fs.writeFileSync("./hackathon/store_admin_data.json",JSON.stringify(arr,null,4))
+            fs.writeFileSync("./store_admin_data.json",JSON.stringify(arr,null,4))
             return true
         }
         else{
-            let arr = JSON.parse(fs.readFileSync("./hackathon/store_admin_data.json"))
+            let arr = JSON.parse(fs.readFileSync("./store_admin_data.json"))
             let obj = arr[0]
             if(!obj.hasOwnProperty(admin_email)){
                 obj[admin_email] = admin_info
                 let arr1 = []
                 arr1.push(obj)
-                fs.writeFileSync("./hackathon/store_admin_data.json",JSON.stringify(arr1,null,4))
+                fs.writeFileSync("./store_admin_data.json",JSON.stringify(arr1,null,4))
                 return true
             }
             else{
@@ -49,12 +48,12 @@ class Admin_Accounts{
     }
 
     login(admin_email,admin_pass){
-        if(!fs.existsSync("./hackathon/store_admin_data.json")){
+        if(!fs.existsSync("./store_admin_data.json")){
             console.log(`----- Your account does not exists: `);
             return false
         }
         else{
-            let arr = JSON.parse(fs.readFileSync("./hackathon/store_admin_data.json"))
+            let arr = JSON.parse(fs.readFileSync("./store_admin_data.json"))
             let obj = arr[0]
             if(obj.hasOwnProperty(admin_email)){
                 if(admin_pass == obj[admin_email]["Admin_pass"]){
@@ -76,7 +75,7 @@ class Admin_Accounts{
 class Customer_Accounts{
 
     intro(){
-        let opt = input.questionInt(`Welcome to Accounts:: \n1.Sign up\n2.Log in\n3.Exit\n`);
+        let opt = input.questionInt(`------Welcome to Accounts: \n\n-------1.Sign up\n-------2.Log in\n-------3.Exit\n`);
         if(opt == 3){
             console.log(`------ Exited----\n`);
             return 0
@@ -95,22 +94,22 @@ class Customer_Accounts{
 }
 
     signup(admin_email,admin_info){
-        if(!fs.existsSync("./hackathon/store_customer_data.json")){
+        if(!fs.existsSync("./store_customer_data.json")){
             let admin_data = {}
             let arr = []
             admin_data[admin_email] = admin_info
             arr.push(admin_data)
-            fs.writeFileSync("./hackathon/store_customer_data.json",JSON.stringify(arr,null,4))
+            fs.writeFileSync("./store_customer_data.json",JSON.stringify(arr,null,4))
             return true
         }
         else{
-            let arr = JSON.parse(fs.readFileSync("./hackathon/store_customer_data.json"))
+            let arr = JSON.parse(fs.readFileSync("./store_customer_data.json"))
             let obj = arr[0]
             if(!obj.hasOwnProperty(admin_email)){
                 obj[admin_email] = admin_info
                 let arr1 = []
                 arr1.push(obj)
-                fs.writeFileSync("./hackathon/store_customer_data.json",JSON.stringify(arr1,null,4))
+                fs.writeFileSync("./store_customer_data.json",JSON.stringify(arr1,null,4))
                 return true
             }
             else{
@@ -122,12 +121,12 @@ class Customer_Accounts{
 
     login(admin_email,admin_pass){
         let num = admin_email.toString()
-        if(!fs.existsSync("./hackathon/store_customer_data.json")){
+        if(!fs.existsSync("./store_customer_data.json")){
             console.log(`----- Your account does not exists: `);
             return false
         }
         else{
-            let arr = JSON.parse(fs.readFileSync("./hackathon/store_customer_data.json"))
+            let arr = JSON.parse(fs.readFileSync("./store_customer_data.json"))
             let obj = arr[0]
             if(obj.hasOwnProperty(num)){
                 if(admin_pass == obj[num]["customer_pass"]){
@@ -139,7 +138,7 @@ class Customer_Accounts{
                 }
             }
             else{
-                console.log(`------ There is no account with this Email: `);
+                console.log(`------ There is no account with this Mobile Number:\n`);
                 return false
             }
         }
@@ -157,13 +156,13 @@ class Customer_Bike_Store{
     }
     
     showbike(){
-        let bike_arr1 = JSON.parse(fs.readFileSync("./hackathon/Bike_Stock.json"))
+        let bike_arr1 = JSON.parse(fs.readFileSync("./Bike_Stock.json"))
         let bike_obj1 = bike_arr1[0]
         let ser = 0
         console.log(`------ Bikes in Our Store:------\n`);
         for(let bike in bike_obj1){
             ser++
-            console.log(`-----${ser}. ${bike}-----${bike_obj1[bike][0]} per Hour----LEFT IN STOCK_(${bike_obj1[bike][1]})-----`);
+            console.log(`-----${ser}. ${bike}-----${bike_obj1[bike][0]} per Hour----LEFT IN STOCK___(${bike_obj1[bike][1]})-----`);
         }
         console.log('\n');
         return ser
@@ -178,7 +177,7 @@ class Customer_Bike_Store{
 
     return(num,customer_pass){
         let customer_contact_no = num.toString()
-        let customer_data_arr = JSON.parse(fs.readFileSync("./hackathon/store_customer_data.json"))
+        let customer_data_arr = JSON.parse(fs.readFileSync("./store_customer_data.json"))
         let obj = customer_data_arr[0]
         if(!obj.hasOwnProperty(customer_contact_no)){
             console.log(`------ You have not taken any bikes on rent: Bye: `);
@@ -188,45 +187,82 @@ class Customer_Bike_Store{
             customer_pass = customer_pass.toString()
             if(customer_pass == obj[num]["customer_pass"]){
                 if(obj[customer_contact_no].hasOwnProperty('rent')){
+
                     let rent = obj[customer_contact_no]['rent']
-                    let total_cost = 0
+                    let total_cost = 0;
                     var bikes_ids = obj[customer_contact_no]['rented_bikes']
-                    // var temp_arr = bikes_ids['bikes']
-                    for(let bike in bikes_ids){
-                        console.log(`------ You have taken these bikes ${obj[customer_contact_no]['rented_bikes'][bike]} at this time ${bike}`);
-                        let reurn_time = new Date()/1000
-                        let rent_time = Number(bike)
-                        let final_time = reurn_time - rent_time
-                        function secondsToHms(d){
-                            d = Number(d);
-                            var h = Math.floor(d / 3600);
-                            var m = Math.floor((d % 3600) / 60);
-                          
-                            var hDis = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-                            var mDis = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-                          
-                            return [hDis,mDis]
-                          }
-                        let [h,m] = secondsToHms(final_time)
-                        h = h.split(' ')
-                        m = m.split(' ')
-                        h = h[0]
-                        m = m[0]
-                        let prize = Number(h) * rent + (Number(m) >= 30)? rent / 2: 50;
-                        total_cost+=prize
+
+                    function Hours(){
+                        var Hrs = 0
+                        for(let bike in bikes_ids){
+                            console.log(`------ You have taken these bikes ${obj[customer_contact_no]['rented_bikes'][bike]} at this time ${bike}`);
+                            var currentDate = new Date();
+                            let ReturnTime = currentDate.getTime()
+                            let rent_time = Number(bike)    
+                            let final_time = ReturnTime - rent_time
+    
+                            function padTo2Digits(num) {
+                                return num.toString().padStart(2,'0');
+                            }
+                            
+                            function convertMsToTime(milliseconds) {
+                              let seconds = Math.floor(milliseconds / 1000);
+                              let minutes = Math.floor(seconds / 60);
+                              let hours = Math.floor(minutes / 60);
+                            
+                              seconds = seconds % 60;
+                              minutes = minutes % 60;
+                              hours = hours % 24;
+                            
+                              return `${padTo2Digits(hours)}:${padTo2Digits(minutes)}:${padTo2Digits(seconds)}`;
+                            }
+                            
+                            let [h,m,s] = convertMsToTime(final_time).split(':')
+                            total_cost += rent
+                            Hrs += h
+                        }
+                        return Hrs
                     }
-                    console.log(`------ Your total cost of rent is ${total_cost} for all Bikes:\n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n `);
-                    var opt = input.questionInt(`------Enter your option: \n`)
+                    let H= Hours()
+                    
+                    if(parseInt(H) >= 0 && parseInt(H) <= 4){
+                        console.log(`\n------ Your total cost of rent is ${total_cost} for all Bikes:\n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n `);
+                    }
+                    else if(parseInt(H) >= 5 && parseInt(H) <= 8){
+                        var discountPrice = total_cost - (total_cost * 5/100)
+                        var discount = '5%'
+                        console.log(`\n------Your Amount is ${total_cost}\n------You got ${discount} Discount
+                        \n------ Your total cost of rent is ${discountPrice} for all Bikes:
+                        \n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n `);
+                    }
+
+                    else if(parseInt(H) >= 9 && parseInt(H) <= 12){
+                        var discountPrice = total_cost - (total_cost * 10/100)
+                        var discount = '10%'
+                        console.log(`\n------Your Amount is ${total_cost}\n------You got ${discount} Discount
+                        \n------ Your total cost of rent is ${discountPrice} for all Bikes:
+                        \n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n `);
+                    }
+
+                    else if(parseInt(H) >= 13 && parseInt(H) <= 24){
+                        var discountPrice = total_cost - (total_cost * 20/100)
+                        var discount = '20%'
+                        console.log(`\n------Your Amount is ${total_cost}\n------You got ${discount} Discount
+                        \n------ Your total cost of rent is ${discountPrice} for all Bikes:
+                        \n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n `);
+                    }
+                    
                 }
                 else{
-                    console.log(`------ You have not taken any bikes on rent: Bye: `);
+                    console.log(`------ You have not taken any bikes on rent: Bye:\n`);
                     return false
                 }
+                var opt = input.questionInt(`------Enter your option: \n`)
                 if(opt == 2){
-                    console.log(`------ Ok, no problem. Return some other Day.`);
+                    console.log(`------ Ok, no problem. Return some other Day.\n`);
                 }
                 else if(opt == 1){
-                    let bike_stock_arr = JSON.parse(fs.readFileSync("./hackathon/Bike_Stock.json"))
+                    let bike_stock_arr = JSON.parse(fs.readFileSync("./Bike_Stock.json"))
                     let bike_stock_obj = bike_stock_arr[0]
                     for(let id in bikes_ids){
                         for(let bike of obj[customer_contact_no]['rented_bikes'][id]){
@@ -235,11 +271,11 @@ class Customer_Bike_Store{
                     }
                     let arr1 = []
                     arr1.push(bike_stock_obj)
-                    fs.writeFileSync("./hackathon/Bike_Stock.json",JSON.stringify(arr1,null,4))
+                    fs.writeFileSync("./Bike_Stock.json",JSON.stringify(arr1,null,4))
                     delete obj[customer_contact_no]
                     let arr2 = []
                     arr2.push(obj)
-                    fs.writeFileSync("./hackathon/store_customer_data.json",JSON.stringify(arr2,null,4))
+                    fs.writeFileSync("./store_customer_data.json",JSON.stringify(arr2,null,4))
                     return true
                 }
                 else{
@@ -257,15 +293,15 @@ class Customer_Bike_Store{
     }
 
     rent(customer_contact_no,customer_info_dict,rent_time){
-        if(!fs.existsSync("./hackathon/store_customer_data.json")){
+        if(!fs.existsSync("./store_customer_data.json")){
             let customer_arr = []
             let customer_data = {}
             customer_data[customer_contact_no] = customer_info_dict
             customer_arr.push(customer_data)
-            fs.writeFileSync("./hackathon/store_customer_data.json",JSON.stringify(customer_arr,null,4))
+            fs.writeFileSync("./store_customer_data.json",JSON.stringify(customer_arr,null,4))
         }
         else{
-            let customer_arr = JSON.parse(fs.readFileSync("./hackathon/store_customer_data.json"))
+            let customer_arr = JSON.parse(fs.readFileSync("./store_customer_data.json"))
             let obj1 = customer_arr[0]
             let num = customer_contact_no.toString()
             if(!obj1.hasOwnProperty(num)){
@@ -273,13 +309,13 @@ class Customer_Bike_Store{
             }
             else{
                 if(obj1[num].hasOwnProperty('rent')){
-                    let arr = customer_info_dict['rented_bikes']['bikes'][rent_time]
+                    let arr = customer_info_dict['rented_bikes'][rent_time]
                     obj1[num]['rented_bikes'][rent_time] = arr
                     obj1[num]['rent'] = obj1[num]['rent'] + customer_info_dict['rent']
                 }
                 else{
                     let bike_dict = {}
-                    bike_dict[rent_time] = customer_info_dict['rented_bikes']['bikes'][rent_time]
+                    bike_dict[rent_time] = customer_info_dict['rented_bikes'][rent_time]
                     obj1[num]['rent'] = customer_info_dict['rent']
                     obj1[num]['rented_bikes'] = bike_dict
                 }
@@ -287,16 +323,16 @@ class Customer_Bike_Store{
             }
             let arr = []
             arr.push(obj1)
-            fs.writeFileSync("./hackathon/store_customer_data.json",JSON.stringify(arr,null,4))
+            fs.writeFileSync("./store_customer_data.json",JSON.stringify(arr,null,4))
         }
-        let bike_arr = JSON.parse(fs.readFileSync("./hackathon/Bike_Stock.json"))
+        let bike_arr = JSON.parse(fs.readFileSync("./Bike_Stock.json"))
         let obj = bike_arr[0]
-        let u_bikes = customer_info_dict["rented_bikes"]['bikes'][rent_time]
+        let u_bikes = customer_info_dict["rented_bikes"][rent_time]
         for(let bike of u_bikes){
             obj[bike][1] = obj[bike][1]-1
         }
         let arr = [obj]
-        fs.writeFileSync("./hackathon/Bike_Stock.json",JSON.stringify(arr,null,4))
+        fs.writeFileSync("./Bike_Stock.json",JSON.stringify(arr,null,4))
     }
 
     chooseBike(){
@@ -304,7 +340,7 @@ class Customer_Bike_Store{
         let total_bikes = 0
         let cost = 0
         while(true){
-            let bike_arrtemp = JSON.parse(fs.readFileSync("./hackathon/Bike_Stock.json"))
+            let bike_arrtemp = JSON.parse(fs.readFileSync("./Bike_Stock.json"))
             let bike_dicttemp = bike_arrtemp[0]
             let opt = input.questionInt(`------ Want to Rent or No\n\n    1.Rent\n    2.Enough\n    3.Don't wanna rent\n`)
             if(opt == 3){
@@ -319,26 +355,23 @@ class Customer_Bike_Store{
             }
             else if (opt == 1){
                 let bike_qty = store1.showbike()
-                let user_choice = input.questionInt(`------ Enter the seriel number of that bike you want:------\n`)
-                if(user_choice>bike_qty || user_choice<1){
-                    console.log("------ sorry, your request is Invalid:------");
-                    return 0
-                }
-                else{
-                    let bike_key = this.bike_arr[user_choice-1]
-                    console.log(`------ You will be charged ${this.bike_obj[bike_key][0]} per Hour for this Bike: `);
-                    let bike_count = input.questionInt(`------ How many ${bike_key} you want to Rent:------\n`)
-                    if(bike_count>bike_dicttemp[bike_key][1]){
-                        console.log(`------ Sorry, ${bike_key} are only ${bike_dicttemp[bike_key][1]} left in our stock`);
-                        return 0
+                let user_choice = input.question(`------ Enter the seriel number of that bike you want:------\n`)
+                let bikeSerNo = user_choice.split(',')
+                
+                for(let ele of bikeSerNo){
+                    let BIKE = this.bike_arr[parseInt(ele)-1]
+                    console.log(`------ How many "${BIKE}" you want to Rent:\n------ You will be charged ${this.bike_obj[BIKE][0]} per Hour for this Bike:`);
+                    var bike_count = input.questionInt()
+
+                    if(bike_count>bike_dicttemp[BIKE][1]){
+                        console.log(`------ Sorry, ${BIKE} are only ${bike_dicttemp[BIKE][1]} left in our stock\n`);
                     }
                     else if(bike_count<=0){
                         console.log(`------ Invalid request: `);
-                        return 0
                     }
-                    for(let i =0;i<bike_count;i++){
-                        bikes.push(bike_key)
-                        cost+=this.bike_obj[bike_key][0]
+                    for(let run = 0; run < bike_count; run ++){
+                        bikes.push(BIKE)
+                        cost+=this.bike_obj[BIKE][0]
                     }
                     total_bikes+=bike_count
                 }
@@ -359,23 +392,23 @@ class Admin_Bike_Store{
         }
     }
     deleteStock(data_to_delete){
-        let bike_arr = JSON.parse(fs.readFileSync("./hackathon/Bike_Stock.json"))
+        let bike_arr = JSON.parse(fs.readFileSync("./Bike_Stock.json"))
         let bike_obj = bike_arr[0]
         for(let bike of data_to_delete){
             delete bike_obj[bike]
         }
         let list = []
         list.push(bike_obj)
-        fs.writeFileSync("./hackathon/Bike_Stock.json",JSON.stringify(list,null,4))
+        fs.writeFileSync("./Bike_Stock.json",JSON.stringify(list,null,4))
     }
     addStock(data_to_add){
-        if(!fs.existsSync("./hackathon/Bike_Stock.json")){
+        if(!fs.existsSync("./Bike_Stock.json")){
             let arr = []
             arr.push(data_to_add)
-            fs.writeFileSync("./hackathon/Bike_Stock.json",JSON.stringify(arr,null,4))
+            fs.writeFileSync("./Bike_Stock.json",JSON.stringify(arr,null,4))
         }
         else{
-            let bike_arr = JSON.parse(fs.readFileSync("./hackathon/Bike_Stock.json"))
+            let bike_arr = JSON.parse(fs.readFileSync("./Bike_Stock.json"))
             let bike_obj = bike_arr[0]
             for(let bike in data_to_add){
                 if(!bike_obj.hasOwnProperty(bike)){
@@ -387,18 +420,18 @@ class Admin_Bike_Store{
             }
             let arr = []
             arr.push(bike_obj)
-            fs.writeFileSync("./hackathon/Bike_Stock.json",JSON.stringify(arr,null,4))
+            fs.writeFileSync("./Bike_Stock.json",JSON.stringify(arr,null,4))
         }
     }
 
     showbike(){
-        let bike_arr = JSON.parse(fs.readFileSync("./hackathon/Bike_Stock.json"))
+        let bike_arr = JSON.parse(fs.readFileSync("./Bike_Stock.json"))
         let bike_obj = bike_arr[0]
         let ser = 0
         console.log(`------ Bikes in Our Store:------\n`);
         for(let bike in bike_obj){
             ser++
-            console.log(`-----${ser}. ${bike}-----${bike_obj[bike][0]} per Hour----LEFT IN STOCK_(${bike_obj[bike][1]})-----`);
+            console.log(`-----${ser}. ${bike}-----${bike_obj[bike][0]} per Hour----LEFT IN STOCK___(${bike_obj[bike][1]})-----`);
         }
         console.log('\n');
         return ser
@@ -411,14 +444,14 @@ let admin_accounts = new Admin_Accounts()
 let customer_accounts = new Customer_Accounts()
 
 function start(){
-    let person = input.questionInt(`------ Who are you? \n------1.Admin\n------2.Customer\n`)
+    let person = input.questionInt(`------ Who are you? \n\n------1.Admin\n------2.Customer\n`)
     if(person == 1){
         let ask = admin_accounts.intro()
         if(ask == 1){
             let [admin_email,admin_info] = Admin_signinData()
             let bool = admin_accounts.signup(admin_email,admin_info)
             if(bool){
-                console.log(`------ Account Created Successfully: now you are a admin: `);
+                console.log(`\n------ Account Created Successfully: now you are a admin:\n`);
                 Admin_func()
             }
             else{
@@ -443,7 +476,7 @@ function start(){
             let [customer_contact_no,customer_info] = Customer_signinData()
             let bool = customer_accounts.signup(customer_contact_no,customer_info)
             if(bool){
-                console.log(`------ Account Created Successfully: now you are a customer: `);
+                console.log(`\n------ Account Created Successfully: now you are a customer:\n`);
                 Customer_func(customer_contact_no,customer_info)
             }
             else{
@@ -455,7 +488,7 @@ function start(){
             let customer_pass = input.question(`------ Enter your password: `)
             let val = customer_accounts.login(customer_contact_no,customer_pass)
             if(val){
-                let arr = JSON.parse(fs.readFileSync("./hackathon/store_customer_data.json"))
+                let arr = JSON.parse(fs.readFileSync("./store_customer_data.json"))
                 let obj = arr[0]
                 let num = customer_contact_no.toString()
                 customer_info = obj[num]
@@ -491,18 +524,18 @@ function Customer_signinData(){
 }
 
 function Customer_func(customer_contact_no,customer_info_dict){
-    if(!fs.existsSync('./hackathon/Bike_Stock.json')){
+    if(!fs.existsSync('./Bike_Stock.json')){
         let Bike_Stock_arr = [{'Royal Enfield Classic 350':[500,5],'Yamaha R15S':[400,5],'TVS Apache RTR 160':[300,5],'TVS Raider':[200,5],'KTM 390 Duke':[100,5]}]
-        fs.writeFileSync('./hackathon/Bike_Stock.json',JSON.stringify(Bike_Stock_arr,null,4))
+        fs.writeFileSync('./Bike_Stock.json',JSON.stringify(Bike_Stock_arr,null,4))
     }
-    let Bike_Stock_arr = JSON.parse(fs.readFileSync("./hackathon/Bike_Stock.json"))
+    let Bike_Stock_arr = JSON.parse(fs.readFileSync("./Bike_Stock.json"))
     let Bike_Stock_obj = Bike_Stock_arr[0]
     let bike_list = []
     for(let bike in Bike_Stock_obj){
         bike_list.push(bike)
     }
     var store1 = new Customer_Bike_Store(Bike_Stock_obj)
-    console.log('WELCOME TO Our Bike Rental Store: \n');
+    console.log('\nWELCOME TO OUR BIKE RENTAL STORE: \n');
     while(true){
         user_action = input.questionInt(`------ WHAT YOU WANT TO DO ------\n\n------ 1. RENT FROM US: \n------ 2. RETURN TO US: \n------ 3. EXIT: \n\n`)
         if(user_action === 3){
@@ -514,20 +547,20 @@ function Customer_func(customer_contact_no,customer_info_dict){
             if(!user_bikes==0){
                 let bike_rent = user_bikes[0]
                 let bike_cost = store1.Bikecost(bike_rent)
-                let confirm = input.questionInt(`------ Do you want to Rent these bikes ${user_bikes}.\n------ 1.Yes\n------2.No\n`)
+                let confirm = input.questionInt(`------ Do you want to Rent these bikes ${user_bikes}.\n------ 1.Yes\n------ 2.No\n`)
                 if(confirm == 2){
-                    console.log(`------ Thank you. No problem. Come again`);
+                    console.log(`------ Thank you. No problem. Come again\n`);
                 }
                 else if(confirm == 1){
-                    let rent_time = new Date()/1000
-                    let rented_bikes = {}
+                    var currentDa = new Date();
+                    let rent_time = currentDa.getTime()
                     let bike_d = {}
                     bike_d[rent_time] = bike_rent
-                    rented_bikes['bikes'] = bike_d
                     customer_info_dict['rent'] = bike_cost
-                    customer_info_dict['rented_bikes'] = rented_bikes
-                    let customer_data = {}
+                    customer_info_dict['rented_bikes'] = bike_d
+                    let customer_data = {};
                     customer_data[customer_contact_no] = customer_info_dict
+                    console.log('Bike Rented successfully...');
                     store1.rent(customer_contact_no,customer_info_dict,rent_time)
                 }
                 else{
@@ -543,7 +576,7 @@ function Customer_func(customer_contact_no,customer_info_dict){
                 console.log(`------ Thank for Visiting: `);
             }
             else{
-                console.log(`------ Thank you for Returning. Come again: And Have a Nice day: `);
+                console.log(`------ Thank you for Returning. Come again: And Have a Nice day:\n`);
             }
         }
         
@@ -551,11 +584,11 @@ function Customer_func(customer_contact_no,customer_info_dict){
 }
 
 function Admin_func(){
-    if(!fs.existsSync('./hackathon/Bike_Stock.json')){
+    if(!fs.existsSync('./Bike_Stock.json')){
         let opt = input.questionInt(`------ What do you want to work with?\n------1.Default data\n------2.Create my own data\n`)
         if(opt == 1){
             let Bike_Stock_arr = [{'Royal Enfield Classic 350':[500,5],'Yamaha R15S':[400,5],'TVS Apache RTR 160':[300,5],'TVS Raider':[200,5],'KTM 390 Duke':[100,5]}]
-            fs.writeFileSync('./hackathon/Bike_Stock.json',JSON.stringify(Bike_Stock_arr,null,4))
+            fs.writeFileSync('./Bike_Stock.json',JSON.stringify(Bike_Stock_arr,null,4))
         }
         else if(opt == 2){
             addData()
@@ -565,14 +598,14 @@ function Admin_func(){
         }
         
     }
-    let Bike_Stock_arr = JSON.parse(fs.readFileSync("./hackathon/Bike_Stock.json"))
+    let Bike_Stock_arr = JSON.parse(fs.readFileSync("./Bike_Stock.json"))
     let Bike_Stock_obj = Bike_Stock_arr[0]
     let bike_list = []
     for(let bike in Bike_Stock_obj){
         bike_list.push(bike)
     }
     var store = new Admin_Bike_Store(Bike_Stock_obj)
-    console.log('WELCOME TO Your Bike Rental Store: \n');
+    console.log('WELCOME TO YOUR BIKE RENTAL STORE: \n');
     while(true){
         let admin_choice = input.questionInt(`------ What you want to do?\n------1.See Stock\n------2.Add Stock\n------3.Delete Stock\n------4.Exit\n`)
         if(admin_choice == 1){
@@ -649,7 +682,6 @@ function addData(){
                 console.log(`------ Invalid request: `);
             }
         }
-
     }
 }
 
@@ -698,5 +730,4 @@ function deleteData(bike_list){
 
     }
 }
-
 start()
