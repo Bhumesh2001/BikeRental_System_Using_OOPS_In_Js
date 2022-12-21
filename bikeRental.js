@@ -194,6 +194,7 @@ class Customer_Bike_Store{
 
                     function Hours(){
                         var Hrs = 0
+                        console.log();
                         for(let bike in bikes_ids){
                             console.log(`------ You have taken these bikes ${obj[customer_contact_no]['rented_bikes'][bike]} at this time ${bike}`);
                             var currentDate = new Date();
@@ -219,14 +220,14 @@ class Customer_Bike_Store{
                             
                             let [h,m,s] = convertMsToTime(final_time).split(':')
                             total_cost += rent
-                            Hrs += h
+                            Hrs += parseInt(h)
                         }
                         return Hrs
                     }
                     let H= Hours()
-                    
+
                     if(parseInt(H) >= 0 && parseInt(H) <= 4){
-                        console.log(`\n------ Your total cost of rent is ${total_cost} for all Bikes:\n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n `);
+                        console.log(`\n------ Your total cost of rent is ${total_cost} for all Bikes:\n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n`);
                     }
                     else if(parseInt(H) >= 5 && parseInt(H) <= 8){
                         var discountPrice = total_cost - (total_cost * 5/100)
@@ -251,13 +252,12 @@ class Customer_Bike_Store{
                         \n------ Your total cost of rent is ${discountPrice} for all Bikes:
                         \n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n `);
                     }
-                    
+                    var opt = input.questionInt(`------Enter your option: \n`)
                 }
                 else{
                     console.log(`------ You have not taken any bikes on rent: Bye:\n`);
                     return false
                 }
-                var opt = input.questionInt(`------Enter your option: \n`)
                 if(opt == 2){
                     console.log(`------ Ok, no problem. Return some other Day.\n`);
                 }
@@ -573,7 +573,7 @@ function Customer_func(customer_contact_no,customer_info_dict){
             let customer_pass = input.question(`------ Enter your password: `)
             let n = store1.return(customer_contact_no,customer_pass)
             if(!n){
-                console.log(`------ Thank for Visiting: `);
+                console.log(`------ Thank for Visiting:\n`);
             }
             else{
                 console.log(`------ Thank you for Returning. Come again: And Have a Nice day:\n`);
