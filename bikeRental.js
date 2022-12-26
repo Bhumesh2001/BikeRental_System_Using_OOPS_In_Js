@@ -4,7 +4,7 @@ const input = require("readline-sync");
 class Admin_Accounts{
     
     intro(){
-        let opt = input.questionInt(`------Welcome to Accounts: \n------1.Sign up\n-------2.Log in\n------3.Exit\n`);
+        let opt = input.questionInt(`------Welcome to Accounts: \n\n------1.Sign up\n------2.Log in\n------3.Exit\n`);
         if(opt == 3){
             console.log(`------ Exited----\n`);
             return 0
@@ -16,7 +16,7 @@ class Admin_Accounts{
             return 2
         }
         else{
-            console.log(`------ Invalid request`);
+            console.log(`\n------ Invalid request\n`);
             admin_accounts.intro()
         }
 }
@@ -41,7 +41,7 @@ class Admin_Accounts{
                 return true
             }
             else{
-                console.log(`------You have already an account with this Email: `);
+                console.log(`------You have already an account with this Email:\n`);
                 return false
             }
         }
@@ -65,7 +65,7 @@ class Admin_Accounts{
                 }
             }
             else{
-                console.log(`------ There is no account with this Email: `);
+                console.log(`------ There is no account with this Email:\n`);
                 return false
             }
         }
@@ -88,7 +88,7 @@ class Customer_Accounts{
             return 2
         }
         else{
-            console.log(`------ Invalid request`);
+            console.log(`\n------ Invalid request\n`);
             customer_accounts.intro()
         }
 }
@@ -113,7 +113,7 @@ class Customer_Accounts{
                 return true
             }
             else{
-                console.log(`------You have already an account with this Email: `);
+                console.log(`------You have already an account with this Email:\n`);
                 return false
             }
         }
@@ -122,7 +122,7 @@ class Customer_Accounts{
     login(admin_email,admin_pass){
         let num = admin_email.toString()
         if(!fs.existsSync("./store_customer_data.json")){
-            console.log(`----- Your account does not exists: `);
+            console.log(`----- Your account does not exists:\n`);
             return false
         }
         else{
@@ -133,7 +133,7 @@ class Customer_Accounts{
                     return true
                 }
                 else{
-                    console.log(`------ Wrong password`);
+                    console.log(`\n------ Wrong password\n`);
                     return false
                 }
             }
@@ -180,7 +180,7 @@ class Customer_Bike_Store{
         let customer_data_arr = JSON.parse(fs.readFileSync("./store_customer_data.json"))
         let obj = customer_data_arr[0]
         if(!obj.hasOwnProperty(customer_contact_no)){
-            console.log(`------ You have not taken any bikes on rent: Bye: `);
+            console.log(`------ You have not taken any bikes on rent: Bye:\n`);
             return false
         }
         else{
@@ -224,34 +224,28 @@ class Customer_Bike_Store{
                         }
                         return Hrs
                     }
-                    let H= Hours()
-
+                    let H = Hours()
+                    var discountPrice;
+                    var discount;
                     if(parseInt(H) >= 0 && parseInt(H) <= 4){
                         console.log(`\n------ Your total cost of rent is ${total_cost} for all Bikes:\n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n`);
                     }
                     else if(parseInt(H) >= 5 && parseInt(H) <= 8){
-                        var discountPrice = total_cost - (total_cost * 5/100)
-                        var discount = '5%'
-                        console.log(`\n------Your Amount is ${total_cost}\n------You got ${discount} Discount
-                        \n------ Your total cost of rent is ${discountPrice} for all Bikes:
-                        \n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n `);
+                        discountPrice = total_cost - (total_cost * 5/100)
+                        discount = '5%'
                     }
-
                     else if(parseInt(H) >= 9 && parseInt(H) <= 12){
-                        var discountPrice = total_cost - (total_cost * 10/100)
-                        var discount = '10%'
-                        console.log(`\n------Your Amount is ${total_cost}\n------You got ${discount} Discount
-                        \n------ Your total cost of rent is ${discountPrice} for all Bikes:
-                        \n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n `);
+                        discountPrice = total_cost - (total_cost * 10/100)
+                        discount = '10%'
                     }
-
                     else if(parseInt(H) >= 13 && parseInt(H) <= 24){
-                        var discountPrice = total_cost - (total_cost * 20/100)
-                        var discount = '20%'
-                        console.log(`\n------Your Amount is ${total_cost}\n------You got ${discount} Discount
-                        \n------ Your total cost of rent is ${discountPrice} for all Bikes:
-                        \n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n `);
+                        discountPrice = total_cost - (total_cost * 20/100)
+                        discount = '20%'
                     }
+                    console.log(`\n------Your Amount is ${total_cost}\n------You got ${discount} Discount
+                    \n------ Your total cost of rent is ${discountPrice} for all Bikes:
+                    \n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n `);
+
                     var opt = input.questionInt(`------Enter your option: \n`)
                 }
                 else{
@@ -344,7 +338,7 @@ class Customer_Bike_Store{
             let bike_dicttemp = bike_arrtemp[0]
             let opt = input.questionInt(`------ Want to Rent or No\n\n    1.Rent\n    2.Enough\n    3.Don't wanna rent\n`)
             if(opt == 3){
-                console.log(`------ No problem: thank you for visiting: `);
+                console.log(`------ No problem: thank you for visiting:\n`);
                 return 0
             }
             else if (opt == 2) {
@@ -356,8 +350,8 @@ class Customer_Bike_Store{
             else if (opt == 1){
                 let bike_qty = store1.showbike()
                 let user_choice = input.question(`------ Enter the seriel number of that bike you want:------\n`)
-                let bikeSerNo = user_choice.split(',')
-                
+                var bikeSerNo = user_choice.split(',')  
+
                 for(let ele of bikeSerNo){
                     let BIKE = this.bike_arr[parseInt(ele)-1]
                     console.log(`------ How many "${BIKE}" you want to Rent:\n------ You will be charged ${this.bike_obj[BIKE][0]} per Hour for this Bike:`);
@@ -377,7 +371,7 @@ class Customer_Bike_Store{
                 }
             }
             else{
-                console.log(`------ Invalid request: `);
+                console.log(`------ Invalid request:\n`);
             }
         }
     }
@@ -392,6 +386,7 @@ class Admin_Bike_Store{
         }
     }
     deleteStock(data_to_delete){
+        console.log(data_to_delete);
         let bike_arr = JSON.parse(fs.readFileSync("./Bike_Stock.json"))
         let bike_obj = bike_arr[0]
         for(let bike of data_to_delete){
@@ -400,6 +395,7 @@ class Admin_Bike_Store{
         let list = []
         list.push(bike_obj)
         fs.writeFileSync("./Bike_Stock.json",JSON.stringify(list,null,4))
+        console.log('\nBike has been deleted successfully....\n');
     }
     addStock(data_to_add){
         if(!fs.existsSync("./Bike_Stock.json")){
@@ -421,6 +417,7 @@ class Admin_Bike_Store{
             let arr = []
             arr.push(bike_obj)
             fs.writeFileSync("./Bike_Stock.json",JSON.stringify(arr,null,4))
+            console.log('\nBike has been Added Successfully....\n');
         }
     }
 
@@ -460,7 +457,7 @@ function start(){
         }
         else if(ask == 2){
             let admin_email = input.questionEMail(`------ Enter your Email: `)
-            let admin_pass = input.question(`------ Enter your password: `)
+            let admin_pass = Check_Data({Password:input.question(`------ Enter your password:`)})
             let val = admin_accounts.login(admin_email,admin_pass)
             if(val){
                 Admin_func()
@@ -484,8 +481,8 @@ function start(){
             }
         }
         else if(ask == 2){
-            let customer_contact_no = input.questionInt(`------ Enter your contact number: `)
-            let customer_pass = input.question(`------ Enter your password: `)
+            let customer_contact_no = Check_Data({Mobile_Number:input.questionInt(`------ Enter your contact no: `)})
+            let customer_pass = Check_Data({Password:input.question(`------ Enter your password:`)})
             let val = customer_accounts.login(customer_contact_no,customer_pass)
             if(val){
                 let arr = JSON.parse(fs.readFileSync("./store_customer_data.json"))
@@ -501,10 +498,53 @@ function start(){
     }
 }
 
+function Check_Data(info){
+    if(Object.keys(info)[0] == 'Name'){
+        let confirmArr = [];
+        for(let chr of Object.values(info)[0]){
+            if((chr.charCodeAt(0) >= 65 && chr.charCodeAt(0) <= 90) || (chr.charCodeAt(0) >= 97 && chr.charCodeAt(0) <= 122)){
+                confirmArr.push(1)
+            }else{
+                confirmArr.push(0)
+            }
+        }
+        if(!confirmArr.includes(0)){
+            return Object.values(info)[0]
+        }
+        console.log('\n------ Required only charecter\n');
+        return Check_Data({Name:input.question(`------ Enter your name: `)})
+
+    }else if(Object.keys(info)[0] == 'Mobile_Number'){
+        if(Object.values(info)[0].toString().length == 10){
+            return Object.values(info)[0]
+        }else{
+            console.log('\nInvalid Mobile Number\n');
+            return Check_Data({Mobile_Number:input.questionInt(`------ Enter your contact no: `)})
+        }
+
+    }else if(Object.keys(info)[0] == 'Password'){
+        var strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
+        if(strongPassword.test(Object.values(info)[0])){
+            return Object.values(info)[0]
+        }else{
+            console.log('\nPlease Choose a Strong Password , there should be lower and upper alphabets ,number and special charecter\n');
+            return Check_Data({Password:input.question(`------ Enter your password:`)})
+        }
+
+    }else if(Object.keys(info)[0] == 'Age'){
+        if(Object.values(info)[0].toString().length == 2){
+            return Object.values(info)[0]
+        }else{
+            console.log('\nInvalid Age\n');
+            return Check_Data({Age:input.questionInt(`------ Enter your age: `)})
+        }
+    }
+}
+
 function Admin_signinData(){
-    let admin_name = input.question(`------ Enter your name: `)
+    let admin_name = Check_Data({Name:input.question(`------ Enter your name: `)})
     let admin_email = input.questionEMail(`------ Enter your Email: `)
-    let admin_pass = input.question(`------ Enter your password: `)
+    let admin_pass = Check_Data({Password:input.question(`------ Enter your password:`)})
     let admin_info = {}
     admin_info["Admin_name"] = admin_name
     admin_info["Admin_pass"] = admin_pass
@@ -512,10 +552,10 @@ function Admin_signinData(){
 }
 
 function Customer_signinData(){
-    let customer_name = input.question(`------ Enter your name: `)
-    let customer_contact_no = input.questionInt(`------ Enter your contact no: `)
-    let customer_pass = input.question(`------ Enter your password: `)
-    let customer_age = input.questionInt(`------ Enter your age: `)
+    let customer_name = Check_Data({Name:input.question(`------ Enter your name: `)})
+    let customer_contact_no = Check_Data({Mobile_Number:input.questionInt(`------ Enter your contact no: `)})
+    let customer_pass = Check_Data({Password:input.question(`------ Enter your password:`)})
+    let customer_age = Check_Data({Age:input.questionInt(`------ Enter your age: `)})
     let customer_info = {}
     customer_info["customer_name"] = customer_name
     customer_info["customer_pass"] = customer_pass
@@ -560,7 +600,7 @@ function Customer_func(customer_contact_no,customer_info_dict){
                     customer_info_dict['rented_bikes'] = bike_d
                     let customer_data = {};
                     customer_data[customer_contact_no] = customer_info_dict
-                    console.log('Bike Rented successfully...');
+                    console.log('\nBike Rented successfully...\n');
                     store1.rent(customer_contact_no,customer_info_dict,rent_time)
                 }
                 else{
@@ -594,7 +634,7 @@ function Admin_func(){
             addData()
         }
         else{
-            console.log(`------ Invalid request: `);
+            console.log(`------ Invalid request:\n`);
         }
         
     }
@@ -605,9 +645,9 @@ function Admin_func(){
         bike_list.push(bike)
     }
     var store = new Admin_Bike_Store(Bike_Stock_obj)
-    console.log('WELCOME TO YOUR BIKE RENTAL STORE: \n');
+    console.log('\nWELCOME TO YOUR BIKE RENTAL STORE: \n');
     while(true){
-        let admin_choice = input.questionInt(`------ What you want to do?\n------1.See Stock\n------2.Add Stock\n------3.Delete Stock\n------4.Exit\n`)
+        let admin_choice = input.questionInt(`------ What you want to do?\n\n------1.See Stock\n------2.Add Stock\n------3.Delete Stock\n------4.Exit\n`)
         if(admin_choice == 1){
             store.showbike()
         }
@@ -622,7 +662,7 @@ function Admin_func(){
             break
         }
         else{
-            console.log(`------ Invalid request: `);
+            console.log(`------ Invalid request:\n`);
         }
     }
 }
@@ -647,7 +687,7 @@ function addData(){
         if(c<1){
             let opt = input.questionInt(`------ 1.Add\n------ 2.Don't Add\n`)
             if(opt == 2){
-                console.log(`------ Ok no data added to stock: `);
+                console.log(`------ Ok no data added to stock:\n`);
                 break
             }
             else if(opt == 1){
@@ -658,7 +698,7 @@ function addData(){
                 c++
             }
             else{
-                console.log(`------ Invalid request: `);
+                console.log(`------ Invalid request:\n`);
             }
         }
         else{
@@ -679,7 +719,7 @@ function addData(){
                 c++
             }
             else{
-                console.log(`------ Invalid request: `);
+                console.log(`------ Invalid request:\n`);
             }
         }
     }
@@ -692,7 +732,7 @@ function deleteData(bike_list){
         if(c<1){
             let opt = input.questionInt(`------ 1.Delete\n------ 2.Don't Delete\n`)
             if(opt == 2){
-                console.log(`------ Ok no data deleted from stock: `);
+                console.log(`------ Ok no data deleted from stock:\n`);
                 break
             }
             else if(opt == 1){
@@ -703,13 +743,13 @@ function deleteData(bike_list){
                 c++
             }
             else{
-                console.log(`------ Invalid request: `);
+                console.log(`------ Invalid request:\n`);
             }
         }
         else{
             let opt = input.questionInt(`------ 1.Delete\n------ 2.Enough\n------ 3.Don't Delete\n`)
             if(opt == 3){
-                console.log(`------ Ok no data deleted from stock: `);
+                console.log(`------ Ok no data deleted from stock:\n`);
                 break
             }
             else if(opt == 2){
@@ -724,7 +764,7 @@ function deleteData(bike_list){
                 c++
             }
             else{
-                console.log(`------ Invalid request: `);
+                console.log(`------ Invalid request:\n`);
             }
         }
 
