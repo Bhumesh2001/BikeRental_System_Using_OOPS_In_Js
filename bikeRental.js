@@ -17,7 +17,7 @@ class Admin_Accounts{
         }
         else{
             console.log(`\n------ Invalid request\n`);
-            admin_accounts.intro()
+            return admin_accounts.intro()
         }
 }
 
@@ -81,7 +81,6 @@ class Customer_Accounts{
             return 0
         }
         else if(opt == 1){
-            customer_accounts.signup()
             return 1
         }
         else if(opt == 2){
@@ -89,7 +88,7 @@ class Customer_Accounts{
         }
         else{
             console.log(`\n------ Invalid request\n`);
-            customer_accounts.intro()
+            return customer_accounts.intro()
         }
 }
 
@@ -225,27 +224,31 @@ class Customer_Bike_Store{
                         return Hrs
                     }
                     let H = Hours()
-                    var discountPrice;
-                    var discount;
+
                     if(parseInt(H) >= 0 && parseInt(H) <= 4){
                         console.log(`\n------ Your total cost of rent is ${total_cost} for all Bikes:\n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n`);
                     }
                     else if(parseInt(H) >= 5 && parseInt(H) <= 8){
-                        discountPrice = total_cost - (total_cost * 5/100)
-                        discount = '5%'
+                        var discountPrice = total_cost - (total_cost * 5/100)
+                        var discount = '5%'
+                        console.log(`\n------Your Amount is ${total_cost}\n------You got ${discount} Discount
+                                     \n------ Your total cost of rent is ${discountPrice} for all Bikes:
+                                     \n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n `);
                     }
                     else if(parseInt(H) >= 9 && parseInt(H) <= 12){
-                        discountPrice = total_cost - (total_cost * 10/100)
-                        discount = '10%'
+                        var discountPrice = total_cost - (total_cost * 10/100)
+                        var discount = '10%'
+                        console.log(`\n------Your Amount is ${total_cost}\n------You got ${discount} Discount
+                                     \n------ Your total cost of rent is ${discountPrice} for all Bikes:
+                                     \n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n `);
                     }
                     else if(parseInt(H) >= 13 && parseInt(H) <= 24){
-                        discountPrice = total_cost - (total_cost * 20/100)
-                        discount = '20%'
+                        var discountPrice = total_cost - (total_cost * 20/100)
+                        var discount = '20%'
+                        console.log(`\n------Your Amount is ${total_cost}\n------You got ${discount} Discount
+                                     \n------ Your total cost of rent is ${discountPrice} for all Bikes:
+                                     \n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n `);
                     }
-                    console.log(`\n------Your Amount is ${total_cost}\n------You got ${discount} Discount
-                    \n------ Your total cost of rent is ${discountPrice} for all Bikes:
-                    \n------ Do you want to return bikes:\n------ 1.Yes\n------ 2.No\n `);
-
                     var opt = input.questionInt(`------Enter your option: \n`)
                 }
                 else{
@@ -438,7 +441,50 @@ class Admin_Bike_Store{
 // ------------------ BODY-------------------//
 
 let admin_accounts = new Admin_Accounts()
-let customer_accounts = new Customer_Accounts()
+var customer_accounts = new Customer_Accounts()
+
+function Check_Data(info){
+    if(Object.keys(info)[0] == 'Name'){
+        let confirmArr = [];
+        for(let chr of Object.values(info)[0]){
+            if((chr.charCodeAt(0) >= 65 && chr.charCodeAt(0) <= 90) || (chr.charCodeAt(0) >= 97 && chr.charCodeAt(0) <= 122)){
+                confirmArr.push(1)
+            }else{
+                confirmArr.push(0)
+            }
+        }
+        if(!confirmArr.includes(0)){
+            return Object.values(info)[0]
+        }
+        console.log('\n------ Required only charecter\n');
+        return Check_Data({Name:input.question(`------ Enter your name: `)})
+
+    }else if(Object.keys(info)[0] == 'Mobile_Number'){
+        if(Object.values(info)[0].toString().length == 10){
+            return Object.values(info)[0]
+        }else{
+            console.log('\nInvalid Mobile Number\n');
+            return Check_Data({Mobile_Number:input.questionInt(`------ Enter your contact no: `)})
+        }
+
+    }else if(Object.keys(info)[0] == 'Password'){
+        var strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
+        if(strongPassword.test(Object.values(info)[0])){
+            return Object.values(info)[0]
+        }else{
+            console.log('\nPlease Choose a Strong Password , there should be lower and upper alphabets ,number and special charecter\n');
+            return Check_Data({Password:input.question(`------ Enter your password:`)})
+        }
+
+    }else if(Object.keys(info)[0] == 'Age'){
+        if(Object.values(info)[0].toString().length == 2){
+            return Object.values(info)[0]
+        }else{
+            console.log('\nInvalid Age\n');
+            return Check_Data({Age:input.questionInt(`------ Enter your age: `)})
+        }
+    }
+}
 
 function start(){
     let person = input.questionInt(`------ Who are you? \n\n------1.Admin\n------2.Customer\n`)
@@ -494,49 +540,6 @@ function start(){
             else{
                 start()
             }
-        }
-    }
-}
-
-function Check_Data(info){
-    if(Object.keys(info)[0] == 'Name'){
-        let confirmArr = [];
-        for(let chr of Object.values(info)[0]){
-            if((chr.charCodeAt(0) >= 65 && chr.charCodeAt(0) <= 90) || (chr.charCodeAt(0) >= 97 && chr.charCodeAt(0) <= 122)){
-                confirmArr.push(1)
-            }else{
-                confirmArr.push(0)
-            }
-        }
-        if(!confirmArr.includes(0)){
-            return Object.values(info)[0]
-        }
-        console.log('\n------ Required only charecter\n');
-        return Check_Data({Name:input.question(`------ Enter your name: `)})
-
-    }else if(Object.keys(info)[0] == 'Mobile_Number'){
-        if(Object.values(info)[0].toString().length == 10){
-            return Object.values(info)[0]
-        }else{
-            console.log('\nInvalid Mobile Number\n');
-            return Check_Data({Mobile_Number:input.questionInt(`------ Enter your contact no: `)})
-        }
-
-    }else if(Object.keys(info)[0] == 'Password'){
-        var strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
-        if(strongPassword.test(Object.values(info)[0])){
-            return Object.values(info)[0]
-        }else{
-            console.log('\nPlease Choose a Strong Password , there should be lower and upper alphabets ,number and special charecter\n');
-            return Check_Data({Password:input.question(`------ Enter your password:`)})
-        }
-
-    }else if(Object.keys(info)[0] == 'Age'){
-        if(Object.values(info)[0].toString().length == 2){
-            return Object.values(info)[0]
-        }else{
-            console.log('\nInvalid Age\n');
-            return Check_Data({Age:input.questionInt(`------ Enter your age: `)})
         }
     }
 }
@@ -609,8 +612,8 @@ function Customer_func(customer_contact_no,customer_info_dict){
             }
         }
         else if(user_action == 2){
-            let customer_contact_no = input.questionInt(`------ Enter your contact Number: `)
-            let customer_pass = input.question(`------ Enter your password: `)
+            let customer_contact_no = Check_Data({Mobile_Number:input.questionInt(`------ Enter your contact no: `)})
+            let customer_pass = Check_Data({Password:input.question(`------ Enter your password:`)})
             let n = store1.return(customer_contact_no,customer_pass)
             if(!n){
                 console.log(`------ Thank for Visiting:\n`);
